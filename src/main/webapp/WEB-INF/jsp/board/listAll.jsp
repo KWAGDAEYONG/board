@@ -29,7 +29,7 @@
 	</tr>
 
 
-<%-- <c:forEach items="${list}" var="boardVO">
+<c:forEach items="${list}" var="boardVO">
 
 	<tr>
 		<td>${boardVO.bno}</td>
@@ -40,7 +40,7 @@
 		<td><span class="badge bg-red">${boardVO.viewcnt }</span></td>
 	</tr>
 
-</c:forEach> --%>
+</c:forEach>
 
 </table>
 

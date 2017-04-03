@@ -16,6 +16,8 @@ import java.util.List;
 public class BoardServiceImpl implements BoardService {
     @Autowired
     BoardRepository boardRepository;
+    
+    
 
     @Override
     public void regist(Board board) throws Exception {
@@ -43,7 +45,7 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public List<Board> findAll(){
-        Specification<Board> del = Specifications.where(BoardSpecification.deleted(false));
-        return boardRepository.findAll(del);
+      
+        return boardRepository.findAll10();
     }
 }

@@ -1,12 +1,17 @@
 package com.kdy.controller;
 
+
+import java.util.Date;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kdy.model.Board;
 import com.kdy.service.BoardService;
@@ -25,6 +30,10 @@ public class BoardController {
     @PostMapping("/register")
     public String register(Board board) throws Exception {
         log.debug(board.toString());
+        Date date = new Date();
+      
+      
+        board.setRegdate(date);
         boardService.regist(board);
         
         //return "/board/success";
@@ -37,9 +46,36 @@ public class BoardController {
     }
     
     @GetMapping("/listAll")
-    public String listAll() throws Exception{
-    
+    public String listAll(Model model) throws Exception{
+    	model.addAttribute("list", boardService.findAll());
     	return "/board/listAll";
+    }
+    
+    @GetMapping("/read")
+    public String read(@RequestParam("bno") Long bno, Model model)throws Exception{
+    	model.addAttribute("read",boardService.read(bno));
+    	return "/board/read";
+    }
+   
+    @GetMapping("/modify")
+    public String modifyFrom(@RequestParam("bno") Long bno, Model model) throws Exception{
+    	model.addAttribute("modify",boardService.read(bno));
+    	return "/board/modify";
+    }
+    
+    @PostMapping("/modify")
+    public String modify(@RequestParam("bno") Long bno, Board board) throws Exception{
+    	Date date = new Date();
+    	board.setRegdate(date);
+    	boardService.modify(bno, board);
+    
+    	return "redirect:/board/listAll";
+    }
+    
+    @PostMapping("/remove")
+    public String remove(@RequestParam("bno") Long bno)throws Exception{
+    	boardService.remove(bno);
+    	return "redirect:/board/listAll";
     }
     
 }

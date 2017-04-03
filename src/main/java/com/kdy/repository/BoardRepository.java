@@ -10,7 +10,6 @@ import java.util.List;
 /**
  * Created by user on 2017-03-29.
  */
-public interface BoardRepository extends JpaRepository<Board, Long>, JpaSpecificationExecutor<Board> {
-
-    List<Board> findAll(Specification<Board> isDeleted);
+public interface BoardRepository extends JpaRepository<Board, Long>, BoardRepositoryQueryDsl {
+ 
 }

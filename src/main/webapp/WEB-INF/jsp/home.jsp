@@ -4,7 +4,8 @@
   pageEncoding="UTF-8"%>
 
 <%@include file="include/header.jsp" %>
-<a href="/board/register">게시판</a>
+<a href="/board/register">글쓰기</a>
+<a href="/board/listAll">게시판</a>
     <!-- Main content -->
     <section class="content">
       <div class="row">
