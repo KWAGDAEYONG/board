@@ -2,10 +2,9 @@ package com.kdy.repository;
 
 import java.util.List;
 
-import org.springframework.data.jpa.domain.Specification;
-
 import com.kdy.model.Board;
+import com.kdy.model.Criteria;
 
 public interface BoardRepositoryQueryDsl {
-	List<Board> findAll10();
+	List<Board> findAll10(Criteria cri);
 }

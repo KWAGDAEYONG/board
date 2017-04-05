@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kdy.model.Board;
+import com.kdy.model.Criteria;
+import com.kdy.model.Paging;
 import com.kdy.service.BoardService;
 
 /**
@@ -46,8 +48,13 @@ public class BoardController {
     }
     
     @GetMapping("/listAll")
-    public String listAll(Model model) throws Exception{
-    	model.addAttribute("list", boardService.findAll());
+    public String listAll(Model model, Criteria cri) throws Exception{
+    	model.addAttribute("list", boardService.findAll(cri));
+    	Paging page = new Paging();
+    	page.setCri(cri);
+    	page.setTotalCount(32);
+    	System.out.println(page.toString());
+    	model.addAttribute("page",page);
     	return "/board/listAll";
     }
     
@@ -60,6 +67,7 @@ public class BoardController {
     @GetMapping("/modify")
     public String modifyFrom(@RequestParam("bno") Long bno, Model model) throws Exception{
     	model.addAttribute("modify",boardService.read(bno));
+    	
     	return "/board/modify";
     }
     

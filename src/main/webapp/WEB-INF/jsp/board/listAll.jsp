@@ -46,7 +46,25 @@
 
 				</div>
 				<!-- /.box-body -->
-				<div class="box-footer">Footer</div>
+				<div class="text-center">
+					<ul class="pagination">
+						<c:if test="${page.prev}">
+							<li><a href="/board/listAll?page=${page.startPage-1}">&laquo;</a>
+						</c:if>
+						
+						<c:forEach begin="${page.startPage}" end="${page.endPage }" var="idx">
+							<li 
+								<c:out value="&{page.cri.page == idx? 'class = active ':''}"/>>
+								<a href="/board/listAll?page=${idx}">${idx}</a>
+							</li>
+						</c:forEach>
+						
+						<c:if test="${page.next && page.endPage > 0 }">
+							<li><a href="/board/listAll?page=${page.endPage+1}">&raquo;</a>
+						</c:if>
+					</ul>
+				
+				</div>
 				<!-- /.box-footer-->
 			</div>
 		</div>

@@ -1,13 +1,13 @@
 package com.kdy.service;
 
-import com.kdy.model.Board;
-import com.kdy.repository.BoardRepository;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.domain.Specification;
-import org.springframework.data.jpa.domain.Specifications;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import com.kdy.model.Board;
+import com.kdy.model.Criteria;
+import com.kdy.repository.BoardRepository;
 
 /**
  * Created by user on 2017-03-29.
@@ -17,8 +17,8 @@ public class BoardServiceImpl implements BoardService {
     @Autowired
     BoardRepository boardRepository;
     
+ 
     
-
     @Override
     public void regist(Board board) throws Exception {
         boardRepository.save(board);
@@ -44,8 +44,8 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public List<Board> findAll(){
+    public List<Board> findAll(Criteria cri){
       
-        return boardRepository.findAll10();
+        return boardRepository.findAll10(cri);
     }
 }
