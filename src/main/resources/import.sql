@@ -30,4 +30,3 @@ insert into board values (29,'test', false, null, 'title', 0, 'writer')
 insert into board values (30,'test', false, null, 'title', 0, 'writer')
 insert into board values (31,'test', false, null, 'title', 0, 'writer')
 insert into board values (32,'test', false, null, 'title', 0, 'writer')
-

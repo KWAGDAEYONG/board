@@ -13,5 +13,6 @@ public interface BoardService {
     public Board read(Long bno) throws Exception;
     public void modify(Long bno,Board board) throws  Exception;
     public void remove(Long bno) throws Exception;
-    public List<Board> findAll(Criteria cri) throws Exception;    
+    public List<Board> findAll(Criteria cri) throws Exception;
+    public Long countPaging() throws Exception;
 }

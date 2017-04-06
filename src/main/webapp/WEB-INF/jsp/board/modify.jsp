@@ -16,27 +16,28 @@
 				<!-- /.box-header -->
 
 <form role="form" method="post">
-
+	<input type='hidden' name='page' value="${cri.page}">
+	
 	<div class="box-body">
 
 		<div class="form-group">
 			<label for="exampleInputEmail1">BNO</label> <input type="text"
-				name='bno' class="form-control" value="${modify.bno}"
+				name='bno' class="form-control" value="${board.bno}"
 				readonly="readonly">
 		</div>
 
 		<div class="form-group">
 			<label for="exampleInputEmail1">Title</label> <input type="text"
-				name='title' class="form-control" value="${modify.title}">
+				name='title' class="form-control" value="${board.title}">
 		</div>
 		<div class="form-group">
 			<label for="exampleInputPassword1">Content</label>
-			<textarea class="form-control" name="content" rows="3">${modify.content}</textarea>
+			<textarea class="form-control" name="content" rows="3">${board.content}</textarea>
 		</div>
 		<div class="form-group">
 			<label for="exampleInputEmail1">Writer</label> <input
 				type="text" name="writer" class="form-control"
-				value="${modify.writer}">
+				value="${board.writer}" readonly="readonly">
 		</div>
 	</div>
 	<!-- /.box-body -->
@@ -56,7 +57,7 @@
 		console.log(formObj);
 
 		$(".btn-warning").on("click", function() {
-			self.location = "/board/listAll";
+			self.location = "/board/listAll?page=${cri.page}";
 		});
 
 		$(".btn-primary").on("click", function() {

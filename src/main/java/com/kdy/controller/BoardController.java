@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kdy.model.Board;
 import com.kdy.model.Criteria;
@@ -50,39 +51,46 @@ public class BoardController {
     @GetMapping("/listAll")
     public String listAll(Model model, Criteria cri) throws Exception{
     	model.addAttribute("list", boardService.findAll(cri));
+    	System.out.println();
     	Paging page = new Paging();
     	page.setCri(cri);
-    	page.setTotalCount(32);
+    	page.setTotalCount(boardService.countPaging());
     	System.out.println(page.toString());
     	model.addAttribute("page",page);
+    	model.addAttribute("cri",cri);
     	return "/board/listAll";
     }
     
     @GetMapping("/read")
-    public String read(@RequestParam("bno") Long bno, Model model)throws Exception{
+    public String read(@RequestParam("bno") Long bno, Model model, Criteria cri)throws Exception{
     	model.addAttribute("read",boardService.read(bno));
+    	model.addAttribute("cri",cri);
     	return "/board/read";
     }
    
     @GetMapping("/modify")
-    public String modifyFrom(@RequestParam("bno") Long bno, Model model) throws Exception{
-    	model.addAttribute("modify",boardService.read(bno));
+    public String modifyFrom(@RequestParam("bno") Long bno, Model model, Criteria cri) throws Exception{
     	
+    	model.addAttribute("board",boardService.read(bno));
+    	model.addAttribute("cri",cri);
     	return "/board/modify";
     }
     
     @PostMapping("/modify")
-    public String modify(@RequestParam("bno") Long bno, Board board) throws Exception{
+    public String modify(@RequestParam("bno") Long bno, Board board, Model model, RedirectAttributes rttr, Criteria cri) throws Exception{
     	Date date = new Date();
     	board.setRegdate(date);
     	boardService.modify(bno, board);
-    
+    	
+    	rttr.addAttribute("page",cri.getPage());
     	return "redirect:/board/listAll";
     }
     
     @PostMapping("/remove")
-    public String remove(@RequestParam("bno") Long bno)throws Exception{
+    public String remove(@RequestParam("bno") Long bno, Criteria cri, RedirectAttributes rttr)throws Exception{
     	boardService.remove(bno);
+    	
+    	rttr.addAttribute("page",cri.getPage());
     	return "redirect:/board/listAll";
     }
     

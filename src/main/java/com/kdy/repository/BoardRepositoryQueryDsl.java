@@ -7,4 +7,5 @@ import com.kdy.model.Criteria;
 
 public interface BoardRepositoryQueryDsl {
 	List<Board> findAll10(Criteria cri);
+	Long countPaging();
 }

@@ -1,7 +1,10 @@
 package com.kdy.model;
 
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
+
 public class Paging {
-	private int totalCount;
+	private Long totalCount;
 	private int startPage;
 	private int endPage;
 	private boolean prev;
@@ -15,7 +18,7 @@ public class Paging {
 		this.cri = cri;
 	}
 	
-	public void setTotalCount(int totalCount){
+	public void setTotalCount(Long totalCount){
 		this.totalCount = totalCount;
 		
 		calcData();
@@ -66,6 +69,12 @@ public class Paging {
 
 	public void setEndPage(int endPage) {
 		this.endPage = endPage;
+	}
+	
+	public String makeQuery(int page){
+		UriComponents uriComponents = UriComponentsBuilder.newInstance().queryParam("page", page).queryParam("perPageNum", cri.getPerPageNum()).build();
+		
+		return uriComponents.toUriString();
 	}
 
 	@Override

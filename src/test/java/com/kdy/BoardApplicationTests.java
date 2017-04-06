@@ -37,9 +37,6 @@ public class BoardApplicationTests {
 		boardService.regist(board);
 	}
 
-	@Test
-	public void findAll() throws Exception{
-		boardService.findAll();
-	}
+
 
 }

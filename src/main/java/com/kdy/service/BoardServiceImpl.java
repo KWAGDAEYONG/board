@@ -45,7 +45,13 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public List<Board> findAll(Criteria cri){
-      
+    
         return boardRepository.findAll10(cri);
     }
+    
+    @Override
+    public Long countPaging(){
+    	return boardRepository.count();
+    }
+    
 }
