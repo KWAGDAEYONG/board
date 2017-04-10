@@ -3,6 +3,7 @@ package com.kdy.controller;
 
 import java.util.Date;
 
+import com.kdy.model.SearchCriteria;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +52,6 @@ public class BoardController {
     @GetMapping("/listAll")
     public String listAll(Model model, Criteria cri) throws Exception{
     	model.addAttribute("list", boardService.findAll(cri));
-    	System.out.println();
     	Paging page = new Paging();
     	page.setCri(cri);
     	page.setTotalCount(boardService.countPaging());
@@ -92,6 +92,11 @@ public class BoardController {
     	
     	rttr.addAttribute("page",cri.getPage());
     	return "redirect:/board/listAll";
+    }
+
+    @GetMapping("/search")
+    public String search(SearchCriteria searchCriteria, Model model)throws Exception{
+        return null;
     }
     
 }
