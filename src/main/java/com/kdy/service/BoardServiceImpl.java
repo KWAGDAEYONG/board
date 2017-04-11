@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.kdy.model.Board;
 import com.kdy.model.Criteria;
+import com.kdy.model.SearchCriteria;
 import com.kdy.repository.BoardRepository;
 
 /**
@@ -44,7 +45,7 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public List<Board> findAll(Criteria cri){
+    public List<Board> findAll(SearchCriteria cri){
     
         return boardRepository.findAll10(cri);
     }

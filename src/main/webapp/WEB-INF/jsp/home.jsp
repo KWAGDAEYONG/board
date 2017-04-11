@@ -8,6 +8,8 @@
 <form Method="get" action="/board/listAll">
 	<input type="hidden" name="page" value="1">
 	<input type="hidden" name="perPageNum" value="10">
+	<input type="hidden" name ="searchType" value="n">
+	<input type="hidden" name ="keyword" value ="">
 	<input type = "submit" value="게시판">
 </form>
     <!-- Main content -->

@@ -12,9 +12,9 @@ public class Paging {
 	
 	private int displayPageNum = 10;
 	
-	private Criteria cri;
+	private SearchCriteria cri;
 	
-	public void setCri(Criteria cri){
+	public void setCri(SearchCriteria cri){
 		this.cri = cri;
 	}
 	

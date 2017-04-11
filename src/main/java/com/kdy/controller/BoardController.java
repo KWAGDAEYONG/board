@@ -2,6 +2,7 @@ package com.kdy.controller;
 
 
 import java.util.Date;
+import java.util.List;
 
 import com.kdy.model.SearchCriteria;
 import org.slf4j.Logger;
@@ -50,26 +51,26 @@ public class BoardController {
     }
     
     @GetMapping("/listAll")
-    public String listAll(Model model, Criteria cri) throws Exception{
-    	model.addAttribute("list", boardService.findAll(cri));
+    public String listAll(Model model, SearchCriteria cri) throws Exception{
+    	List<Board> temp = boardService.findAll(cri);
+    	model.addAttribute("list", temp);
     	Paging page = new Paging();
     	page.setCri(cri);
     	page.setTotalCount(boardService.countPaging());
-    	System.out.println(page.toString());
     	model.addAttribute("page",page);
     	model.addAttribute("cri",cri);
     	return "/board/listAll";
     }
     
     @GetMapping("/read")
-    public String read(@RequestParam("bno") Long bno, Model model, Criteria cri)throws Exception{
+    public String read(@RequestParam("bno") Long bno, Model model, SearchCriteria cri)throws Exception{
     	model.addAttribute("read",boardService.read(bno));
     	model.addAttribute("cri",cri);
     	return "/board/read";
     }
    
     @GetMapping("/modify")
-    public String modifyFrom(@RequestParam("bno") Long bno, Model model, Criteria cri) throws Exception{
+    public String modifyFrom(@RequestParam("bno") Long bno, Model model, SearchCriteria cri) throws Exception{
     	
     	model.addAttribute("board",boardService.read(bno));
     	model.addAttribute("cri",cri);
@@ -77,26 +78,30 @@ public class BoardController {
     }
     
     @PostMapping("/modify")
-    public String modify(@RequestParam("bno") Long bno, Board board, Model model, RedirectAttributes rttr, Criteria cri) throws Exception{
+    public String modify(@RequestParam("bno") Long bno, Board board, Model model, RedirectAttributes rttr, SearchCriteria cri) throws Exception{
+    	System.out.println(cri);
     	Date date = new Date();
     	board.setRegdate(date);
     	boardService.modify(bno, board);
     	
     	rttr.addAttribute("page",cri.getPage());
+    	rttr.addAttribute("perPageNum",cri.getPerPageNum());
+    	rttr.addAttribute("searchType",cri.getSearchType());
+    	rttr.addAttribute("keyword",cri.getKeyword());
+    	
     	return "redirect:/board/listAll";
     }
     
     @PostMapping("/remove")
-    public String remove(@RequestParam("bno") Long bno, Criteria cri, RedirectAttributes rttr)throws Exception{
+    public String remove(@RequestParam("bno") Long bno, SearchCriteria cri, RedirectAttributes rttr)throws Exception{
     	boardService.remove(bno);
     	
     	rttr.addAttribute("page",cri.getPage());
+    	rttr.addAttribute("perPageNum",cri.getPerPageNum());
+    	rttr.addAttribute("searchType",cri.getSearchType());
+    	rttr.addAttribute("keyword",cri.getKeyword());
+    	
     	return "redirect:/board/listAll";
-    }
-
-    @GetMapping("/search")
-    public String search(SearchCriteria searchCriteria, Model model)throws Exception{
-        return null;
     }
     
 }
