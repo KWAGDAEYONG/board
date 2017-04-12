@@ -51,8 +51,8 @@ public class BoardServiceImpl implements BoardService {
     }
     
     @Override
-    public Long countPaging(){
-    	return boardRepository.count();
+    public Long countPaging(SearchCriteria cri){
+    	return boardRepository.countPaging(cri);
     }
     
 }

@@ -56,7 +56,7 @@ public class BoardController {
     	model.addAttribute("list", temp);
     	Paging page = new Paging();
     	page.setCri(cri);
-    	page.setTotalCount(boardService.countPaging());
+    	page.setTotalCount(boardService.countPaging(cri));
     	model.addAttribute("page",page);
     	model.addAttribute("cri",cri);
     	return "/board/listAll";

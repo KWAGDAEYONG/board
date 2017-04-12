@@ -1,9 +1,12 @@
 package com.kdy.model;
 
+import java.util.Date;
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import java.util.Date;
+import javax.persistence.OneToMany;
 
 /**
  * Created by user on 2017-03-29.
@@ -19,6 +22,8 @@ public class Board {
     private String writer;
     private Date regdate;
     private int viewcnt;
+    @OneToMany(mappedBy="board")
+    private List<Answer> answer;
     private boolean deleted = false;
 
     public Long getBno() {

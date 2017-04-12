@@ -17,14 +17,14 @@ import com.querydsl.core.BooleanBuilder;
 @Service
 public class BoardRepositoryImpl extends QueryDslRepositorySupport implements BoardRepositoryQueryDsl{
 
-	private List<Board> temp = new ArrayList<Board>();
+	
 	public BoardRepositoryImpl() {
 		super(Board.class);
 	}
 
 	@Override
 	public List<Board> findAll10(SearchCriteria cri) {
-
+		List<Board> temp = new ArrayList<Board>();
 		QBoard qboard = QBoard.board;
 		BooleanBuilder br = new BooleanBuilder();
 		switch (cri.getSearchType()) {
@@ -105,9 +105,85 @@ public class BoardRepositoryImpl extends QueryDslRepositorySupport implements Bo
 	}
 
 	@Override
-	public Long countPaging() {
+	public Long countPaging(SearchCriteria cri) {
+		Long temp = 0L;
 		QBoard qboard = QBoard.board;
-		return from(qboard).where(qboard.deleted.eq(false)).where(qboard.bno.gt(0)).fetchCount();
+		BooleanBuilder br = new BooleanBuilder();
+		switch (cri.getSearchType()) {
+			case "t":
+				temp = from(qboard)
+						.where(qboard.deleted.eq(false))
+						.where(qboard.bno.gt(0))
+						.where(qboard.title.eq(cri.getKeyword()))
+						.offset(cri.offset())
+						.limit(cri.getPerPageNum())
+						.orderBy(qboard.bno.desc()).fetchCount();
+				break;
+			case "c":
+				temp = from(qboard)
+						.where(qboard.deleted.eq(false))
+						.where(qboard.bno.gt(0))
+						.where(qboard.content.like(cri.getKeyword()))
+						.offset(cri.offset())
+						.limit(cri.getPerPageNum())
+						.orderBy(qboard.bno.desc()).fetchCount();
+				break;
+				
+			case "w":
+				temp = from(qboard)
+						.where(qboard.deleted.eq(false))
+						.where(qboard.bno.gt(0))
+						.where(qboard.writer.eq(cri.getKeyword()))
+						.offset(cri.offset())
+						.limit(cri.getPerPageNum())
+						.orderBy(qboard.bno.desc()).fetchCount();
+				break;
+			case "n":
+				temp = from(qboard)
+						.where(qboard.deleted.eq(false))
+						.where(qboard.bno.gt(0))
+						.offset(cri.offset())
+						.limit(cri.getPerPageNum())
+						.orderBy(qboard.bno.desc()).fetchCount();
+				break;
+			case "tc":	
+				br.or(qboard.title.eq(cri.getKeyword()));
+				br.or(qboard.content.like(cri.getKeyword()));
+				
+				temp = from(qboard)
+						.where(qboard.deleted.eq(false))
+						.where(qboard.bno.gt(0))
+						.where(br)
+						.offset(cri.offset())
+						.limit(cri.getPerPageNum())
+						.orderBy(qboard.bno.desc()).fetchCount();
+				break;
+			case "cw":
+				br.or(qboard.writer.eq(cri.getKeyword()));
+				br.or(qboard.content.like(cri.getKeyword()));
+				temp = from(qboard)
+						.where(qboard.deleted.eq(false))
+						.where(qboard.bno.gt(0))
+						.where(br)
+						.offset(cri.offset())
+						.limit(cri.getPerPageNum())
+						.orderBy(qboard.bno.desc()).fetchCount();
+				break;
+			case "tcw":
+				br.or(qboard.title.eq(cri.getKeyword()));
+				br.or(qboard.writer.eq(cri.getKeyword()));
+				br.or(qboard.content.like(cri.getKeyword()));
+				temp = from(qboard)
+						.where(qboard.deleted.eq(false))
+						.where(qboard.bno.gt(0))
+						.where(br)
+						.offset(cri.offset())
+						.limit(cri.getPerPageNum())
+						.orderBy(qboard.bno.desc()).fetchCount(); 
+				
+				break;
+		}
+		return temp;
 	}
 
 }
