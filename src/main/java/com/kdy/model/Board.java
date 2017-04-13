@@ -22,8 +22,6 @@ public class Board {
     private String writer;
     private Date regdate;
     private int viewcnt;
-    @OneToMany(mappedBy="board")
-    private List<Answer> answer;
     private boolean deleted = false;
 
     public Long getBno() {
