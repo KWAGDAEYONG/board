@@ -41,7 +41,7 @@ public class BoardRepositoryImpl extends QueryDslRepositorySupport implements Bo
 				temp = from(qboard)
 						.where(qboard.deleted.eq(false))
 						.where(qboard.bno.gt(0))
-						.where(qboard.content.like(cri.getKeyword()))
+						.where(qboard.content.contains(cri.getKeyword()))
 						.offset(cri.offset())
 						.limit(cri.getPerPageNum())
 						.orderBy(qboard.bno.desc()).fetch();
@@ -66,7 +66,7 @@ public class BoardRepositoryImpl extends QueryDslRepositorySupport implements Bo
 				break;
 			case "tc":	
 				br.or(qboard.title.eq(cri.getKeyword()));
-				br.or(qboard.content.like(cri.getKeyword()));
+				br.or(qboard.content.contains(cri.getKeyword()));
 				
 				temp = from(qboard)
 						.where(qboard.deleted.eq(false))
@@ -78,7 +78,7 @@ public class BoardRepositoryImpl extends QueryDslRepositorySupport implements Bo
 				break;
 			case "cw":
 				br.or(qboard.writer.eq(cri.getKeyword()));
-				br.or(qboard.content.like(cri.getKeyword()));
+				br.or(qboard.content.contains(cri.getKeyword()));
 				temp = from(qboard)
 						.where(qboard.deleted.eq(false))
 						.where(qboard.bno.gt(0))
@@ -90,7 +90,7 @@ public class BoardRepositoryImpl extends QueryDslRepositorySupport implements Bo
 			case "tcw":
 				br.or(qboard.title.eq(cri.getKeyword()));
 				br.or(qboard.writer.eq(cri.getKeyword()));
-				br.or(qboard.content.like(cri.getKeyword()));
+				br.or(qboard.content.contains(cri.getKeyword()));
 				temp = from(qboard)
 						.where(qboard.deleted.eq(false))
 						.where(qboard.bno.gt(0))
