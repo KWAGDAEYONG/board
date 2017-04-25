@@ -23,6 +23,8 @@ public class Board {
     private Date regdate;
     private int viewcnt;
     private boolean deleted = false;
+    @OneToMany(mappedBy="board")
+    private List<Answer> answers;
 
     public Long getBno() {
         return bno;
